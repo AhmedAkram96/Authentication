@@ -11,6 +11,11 @@ var userSchema = mongoose.Schema({
     required: true,
     trim: true,
   },
+  confirmpassword: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   firstname: {
     type:String,
     required:true

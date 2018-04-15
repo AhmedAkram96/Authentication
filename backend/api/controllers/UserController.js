@@ -6,13 +6,22 @@ var mongoose = require('mongoose'),
   jwt = require('jsonwebtoken'),
   Encryption = require('../utils/encryption');
 
-  module.exports.register()=function(req,res,next){
+  module.exports.register=function(req,res,next){
       var valid = req.body.username && Validations.isString(req.body.username)
                 && req.body.firstname && Validations.isString(req.body.firstname)
                 && req.body.lastname && Validations.isString(req.body.lastname)
                 && req.body.email && Validations.isString(req.body.email) && Validations.matchesRegex(req.body.email, EMAIL_REGEX)
                 && req.body.password && Validations.isString(req.body.password) 
                 && req.body.confirmpassword && Validations.isString(req.body.confirmpassword)
+
+
+console.log(req.body.username)
+console.log(req.body.firstname)
+console.log(req.body.lastname)
+console.log(req.body.email)
+console.log(req.body.password)
+console.log(req.body.confirmpassword)
+
 
      if(!valid){
          return res.status(422).json({
@@ -40,30 +49,34 @@ var mongoose = require('mongoose'),
         })  
     }
 
-    User.findOne({username:req.bod.username.trim()}).execute(
-        function(err,user){
+    // User.findOne({username: req.body.username.trim()}).execute(
+    //     function(err,user){
+    //         console.log("hna 2")
+
+    //         if(err){
+    //             return next(err);
+    //         }
+    //         if(user){
+    //             return res.status(422).json({
+    //                 err:null,
+    //                 msg:'there is already a user with this username',
+    //                 data:null,
+    //             })
+    //         }
+    //     })
+
+
+        User.findOne({
+            email: req.body.email.trim().toLowerCase(),
+            username : req.body.username.trim()
+          }).exec(function(err, user) {
             if(err){
                 return next(err);
             }
             if(user){
                 return res.status(422).json({
                     err:null,
-                    msg:'there is already a user with this username',
-                    data:null,
-                })
-            }
-        })
-
-
-    User.findOne({email:req.body.email.trim().tolowercase()}).execute(
-        function(err,user){
-            if(err){
-                return next(err);
-            }
-            if(user){
-                return res.status(422).json({
-                    err:null,
-                    msg:'there is already a user registered with this email',
+                    msg:'there is already a user registered with this email or username',
                     data:null,
                 })
             }   
@@ -75,8 +88,10 @@ var mongoose = require('mongoose'),
                 req.body.password=hash
 
                 User.create(req.body , function(err,newuser){
+                    console.log("hna 3")
+
                     if(err){
-                        return next(err)
+                        return next(err+"here")
                     }
                     res.status(201).json({
                         err:null,
@@ -87,4 +102,10 @@ var mongoose = require('mongoose'),
 
             })
         })     
+ }
+
+ module.exports.login=function(req,res,next){
+
+
+    
  }
