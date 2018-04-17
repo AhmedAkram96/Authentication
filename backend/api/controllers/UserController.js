@@ -66,10 +66,7 @@ console.log(req.body.confirmpassword)
     //     })
 
 
-        User.findOne({
-            email: req.body.email.trim().toLowerCase(),
-            username : req.body.username.trim()
-          }).exec(function(err, user) {
+        User.findOne({$or:[ {email: req.body.email.trim().toLowerCase()},{username:req.body.username.trim().toLowerCase()} ] }).exec(function(err, user) {
             if(err){
                 return next(err);
             }
