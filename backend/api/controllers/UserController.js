@@ -49,22 +49,6 @@ console.log(req.body.confirmpassword)
         })  
     }
 
-    // User.findOne({username: req.body.username.trim()}).execute(
-    //     function(err,user){
-    //         console.log("hna 2")
-
-    //         if(err){
-    //             return next(err);
-    //         }
-    //         if(user){
-    //             return res.status(422).json({
-    //                 err:null,
-    //                 msg:'there is already a user with this username',
-    //                 data:null,
-    //             })
-    //         }
-    //     })
-
 
         User.findOne({$or:[ {email: req.body.email.trim().toLowerCase()},{username:req.body.username.trim().toLowerCase()} ] }).exec(function(err, user) {
             if(err){
@@ -103,6 +87,60 @@ console.log(req.body.confirmpassword)
 
  module.exports.login=function(req,res,next){
 
+var valid = req.body.email && Validations.isString(req.body.email) && Validations.matchesRegex(req.body.email, EMAIL_REGEX)
+            && req.body.password && Validations.isString(req.body.password);
+            
+if(!valid){
+    return res.status(422).json({
+        err:null,
+        msg:"email and password are Required fields",
+        data:null
+    })
+    }
 
-    
- }
+
+    User.findOne({email:req.body.email}).exec(function (err,user){
+        if(err){
+            return next(err);
+        }
+        if(!user){
+        return res.status(404).json({
+            err: null,
+            msg: "no user is found with this email",
+            data:null
+        })
+        }
+        else{
+            Encryption.comparePasswordToHash(req.body.password, user.password, function(err,match){
+                if(err){
+                    return next(err);
+                }
+                if(!match){
+                    return res.status(401).json({
+                        err:null,
+                        msg:"password is incorrect",
+                        data:null
+                    })
+                }
+                else{
+                    var token = jwt.sign({
+                        user: user.toObject()
+                    },
+                    req.app.get('secret'),
+                {
+                    expiresIn: '9999999999999999999999999999999999999999999999999999999999999999999999999999999h'
+                });
+
+                return res.status(200).json({
+                    err:null,
+                    msg:"Logged in successfully",
+                    data:token
+                })
+                }
+            }
+        )
+        }
+    }
+    )
+}
+ 

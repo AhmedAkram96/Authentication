@@ -12,10 +12,18 @@ const routes: Routes = [
         path: 'register',
         loadChildren: './register/register.module#RegisterModule'
       },
-      // {
-      //   path: '',
-      //   redirectTo: 'register'
-      // }
+      {
+        path: 'login',
+        loadChildren: './login/login.module#LoginModule'
+      },
+      {
+        path: 'user',
+        loadChildren: './user/user.module#UserModule'
+      },
+      {
+        path: '',
+        redirectTo: 'user'
+      }
     ]
   }
 ];

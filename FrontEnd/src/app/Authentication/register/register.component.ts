@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-Authentication-register',
-  template: ` <ngx-main-layout>
+  template: `
   <router-outlet>
   <form [formGroup]="myForm"class="container" #userForm="ngForm" (ngSubmit) = "onSubmit(userForm.value)">
 
@@ -55,7 +55,7 @@ import { HttpClient } from '@angular/common/http';
 
 <div>
 
-<input  class="btn btn-danger"type = "submit" [disabled]="! myForm.valid" value = "Register"style=" margin-top:100px;margin-left:150px;background-color:#DC0C18 ;">
+<input  class="btn btn-success"type = "submit" [disabled]="! myForm.valid" value = "Register"style=" margin-top:100px;margin-left:150px;">
 
 </div>
 
@@ -63,7 +63,7 @@ import { HttpClient } from '@angular/common/http';
 
   </form>
   </router-outlet>
-  </ngx-main-layout>`
+  `
 })
 export class RegisterComponent implements OnInit{
 

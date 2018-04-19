@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
   user: any;
   userMenu: any[];
-
+loggedin:boolean;
   constructor(
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService
@@ -20,6 +20,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.userMenu = [{ title: 'Logout' }];
+    if(localStorage.getItem("UserDoc")!=null){
+      this.loggedin = true;
+       this.user = JSON.parse(localStorage.getItem("userProps"))["username"];
+    } 
+    else{
+      this.loggedin = false;
+    }
     this.onMenuItemClick();
   }
 
@@ -35,8 +42,11 @@ export class HeaderComponent implements OnInit {
   onMenuItemClick() {
     this.menuService.onItemClick().subscribe((bag: NbMenuBag) => {
       if (bag.item.title === 'Logout') {
-        //Think about what to do ;)
-      }
+        localStorage.clear();
+        localStorage.removeItem('userProps');
+        this.loggedin = false;
+        this.user = null;
+        window.location.reload();      }
     });
   }
 }

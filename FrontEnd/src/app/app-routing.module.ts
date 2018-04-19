@@ -10,8 +10,8 @@ const routes: Routes = [
     path: 'Authentication',
     loadChildren: './Authentication/Authentication.module#AuthenticationModule'
   },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '', redirectTo: 'Authentication', pathMatch: 'full' },
+  { path: '**', redirectTo: 'Authentication' }
 ];
 
 const config: ExtraOptions = {

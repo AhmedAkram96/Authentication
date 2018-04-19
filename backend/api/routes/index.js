@@ -5,5 +5,6 @@ var express = require('express'),
 //------------------------------User Routes-----------------------------------------
 
 router.post('/User/addUser', userCtrl.register);
+router.post('/User/login', userCtrl.login);
 
 module.exports = router;

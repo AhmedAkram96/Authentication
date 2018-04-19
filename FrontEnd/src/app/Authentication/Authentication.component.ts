@@ -4,15 +4,14 @@ import {Router,ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-Authentication',
   template: `
-  <router-outlet></router-outlet>
-  <button type="button" (click)="register()" class="btn btn-primary" >Register</button>`
+  <ngx-main-layout>
+  <router-outlet>
+  </router-outlet>
+  </ngx-main-layout>
+  `
 })
 export class AuthenticationComponent {
 
-
 constructor(private router: Router){}
 
-register(){
-  this.router.navigateByUrl('/Authentication/register');
-}
 }

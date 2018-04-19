@@ -12,6 +12,6 @@
 
 <nb-actions size="medium" class="header-container right">
   <nb-action>
-    <nb-user [nbContextMenu]="userMenu" [name]="user?.username"></nb-user>
+    <nb-user *ngIf="loggedin==true" [nbContextMenu]="userMenu" [name]="user"></nb-user>
   </nb-action>
 </nb-actions>
