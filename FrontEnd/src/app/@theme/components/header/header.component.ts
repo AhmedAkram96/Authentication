@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {Router,ActivatedRoute} from "@angular/router";
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { NbMenuBag } from '@nebular/theme/components/menu/menu.service';
@@ -15,11 +16,13 @@ export class HeaderComponent implements OnInit {
 loggedin:boolean;
   constructor(
     private sidebarService: NbSidebarService,
-    private menuService: NbMenuService
+    private menuService: NbMenuService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.userMenu = [{ title: 'Logout' }];
+
     if(localStorage.getItem("UserDoc")!=null){
       this.loggedin = true;
        this.user = JSON.parse(localStorage.getItem("userProps"))["username"];
@@ -44,9 +47,13 @@ loggedin:boolean;
       if (bag.item.title === 'Logout') {
         localStorage.clear();
         localStorage.removeItem('userProps');
+
         this.loggedin = false;
         this.user = null;
-        window.location.reload();      }
+        window.location.reload(); 
+        this.router.navigateByUrl('/Authentication/user');
+      }
+     
     });
   }
 }

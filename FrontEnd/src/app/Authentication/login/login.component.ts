@@ -87,8 +87,9 @@ onSubmit = function(user){
             payload = window.atob(payload);
             temp = JSON.parse(payload);
             localStorage.setItem('userProps', JSON.stringify(temp["user"]));
-    
+            
          this.router.navigateByUrl('/dashboard');
+
         }
       
     },err=>{

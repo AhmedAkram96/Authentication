@@ -10,7 +10,7 @@ import {Router,ActivatedRoute} from "@angular/router";
   selector: 'app-Authentication-user',
   template: `
   <router-outlet>
-  <div class="container">
+  <div  class="container">
   <button type="button" (click)="register()" class="btn btn-success" >Register</button>
   <hr>
   <h3>Already a member? </h3>
@@ -20,11 +20,14 @@ import {Router,ActivatedRoute} from "@angular/router";
   </router-outlet>
   `
 })
-export class UserComponent implements OnInit{
+export class UserComponent {
 
   myForm: FormGroup;
+loggedin:boolean=true;
+constructor(private http: HttpClient,private router: Router){
+   
+}
 
-constructor(private http: HttpClient,private router: Router){}
 
 register(){
     this.router.navigateByUrl('/Authentication/register');
@@ -33,7 +36,7 @@ register(){
     this.router.navigateByUrl('/Authentication/login');
   }
 
-ngOnInit(){}
+
 
 
 }

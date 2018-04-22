@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {environment} from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import {Router,ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -69,7 +70,7 @@ export class RegisterComponent implements OnInit{
 
   myForm: FormGroup;
 
-constructor(private http: HttpClient){}
+constructor(private http: HttpClient ,private router: Router ){}
 
 ngOnInit(){
   this.myForm = new FormGroup({
@@ -108,6 +109,8 @@ var config = {
 this.http.post(environment.apiUrl+'/User/addUser',data,config)
     .subscribe(res=>{
       console.log(res);
+      this.router.navigateByUrl('/Authentication/login');
+
     },err=>{
       console.log(err['error']['msg']);
     });
