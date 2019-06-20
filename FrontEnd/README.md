@@ -13,4 +13,4 @@ A starter Angular 5 frontend template using ng-bootstrap(a native Angular implem
 2. npm install
 3. ng serve
 
-&#9400; Omar Doma 2018
+
